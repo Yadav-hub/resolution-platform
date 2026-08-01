@@ -4,7 +4,7 @@ import com.aman.resolutionplatform.mapper.FeedbackMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.aman.resolutionplatform.DTO.Feedback.FeedbackDTO;
+import com.aman.resolutionplatform.DTO.Feedback.FeedbackRequestDTO;
 import com.aman.resolutionplatform.DTO.Feedback.FeedbackResponseDTO;
 import com.aman.resolutionplatform.DTO.Feedback.UpdateFeedbackDTO;
 import com.aman.resolutionplatform.Exception.FeedbackNotFoundException;
@@ -24,7 +24,7 @@ public class FeedbackServiceImple implements FeedbackService{
         this.feedbackMapper = feedbackMapper;
     }
 
-    public FeedbackResponseDTO submitFeedback(FeedbackDTO dto)
+    public FeedbackResponseDTO submitFeedback(FeedbackRequestDTO dto)
     {
         Feedback feedbackData = new Feedback();
         feedbackData.setCustomerName(dto.getCustomerName());

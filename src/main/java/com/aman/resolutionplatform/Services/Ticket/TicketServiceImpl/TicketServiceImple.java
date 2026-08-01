@@ -5,7 +5,7 @@ import com.aman.resolutionplatform.mapper.TicketMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.aman.resolutionplatform.DTO.Ticket.TicketDTO;
+import com.aman.resolutionplatform.DTO.Ticket.TicketRequestDTO;
 import com.aman.resolutionplatform.Enum.Ticket.Department;
 import com.aman.resolutionplatform.Enum.Ticket.TicketStatus;
 import com.aman.resolutionplatform.Exception.FeedbackNotFoundException;
@@ -34,7 +34,7 @@ public class TicketServiceImple implements TicketService{
 
 
 
-    public TicketResponseDTO createTicket(TicketDTO ticketDTO) {
+    public TicketResponseDTO createTicket(TicketRequestDTO ticketDTO) {
         
         Integer feedback_id = ticketDTO.getFeedbackId();
 

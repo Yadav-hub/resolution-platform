@@ -4,11 +4,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RestController;
-import com.aman.resolutionplatform.DTO.Feedback.FeedbackDTO;
+
+import com.aman.resolutionplatform.DTO.Feedback.FeedbackRequestDTO;
 import com.aman.resolutionplatform.DTO.Feedback.FeedbackResponseDTO;
 import com.aman.resolutionplatform.DTO.Feedback.UpdateFeedbackDTO;
-import com.aman.resolutionplatform.DTO.Ticket.TicketResponseDTO;
-import com.aman.resolutionplatform.Model.Feedback.Feedback;
 import com.aman.resolutionplatform.Services.Feedback.FeedbackService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -55,7 +54,7 @@ public class FeedbackController {
     }
     
     @PostMapping("/feedback")
-    public ResponseEntity<FeedbackResponseDTO> saveFeedback(@RequestBody @Valid FeedbackDTO dto) 
+    public ResponseEntity<FeedbackResponseDTO> saveFeedback(@RequestBody @Valid FeedbackRequestDTO dto) 
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.submitFeedback(dto));
     }

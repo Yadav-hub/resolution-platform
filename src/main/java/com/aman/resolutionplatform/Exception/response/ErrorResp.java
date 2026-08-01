@@ -2,7 +2,7 @@ package com.aman.resolutionplatform.Exception.response;
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
-public class ErrorReponse {
+public class ErrorResp {
 
     private LocalDateTime timestamp;
     private String path;

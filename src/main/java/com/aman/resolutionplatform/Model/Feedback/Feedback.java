@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.aman.resolutionplatform.Enum.Feedback.Rating;
 import com.aman.resolutionplatform.Enum.Feedback.Status;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,14 +20,21 @@ public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer feedbackId;
+    @Column(nullable = false)
     private String customerName;
+    @Column(unique = true)
     private String customerPhoneNo;
+
+    @Column(nullable = false)
     private String roomNo;
+    @Column(nullable = false)
     private String feedbackInfo;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Rating rating;
     private LocalDateTime onCreate;
     @Enumerated(EnumType.STRING)
+    
     private Status status;
 
     

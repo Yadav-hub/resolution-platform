@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
-public class TicketDTO {
+public class TicketRequestDTO {
     
 
     @NotNull(message = "Feedback Id can't be null")

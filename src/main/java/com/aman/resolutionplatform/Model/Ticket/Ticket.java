@@ -4,6 +4,9 @@ import com.aman.resolutionplatform.Enum.Ticket.Department;
 import com.aman.resolutionplatform.Enum.Ticket.SeverityType;
 import com.aman.resolutionplatform.Enum.Ticket.TicketStatus;
 import com.aman.resolutionplatform.Model.Feedback.Feedback;
+import com.aman.resolutionplatform.Model.User.User;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -27,20 +30,25 @@ public class Ticket {
     private Feedback feedback;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Department department;
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private SeverityType severityType;
     
+    @Column(nullable = false)
     private String issueInfo;
 
-
-
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TicketStatus ticketStatus;
     
     private LocalDateTime createdAt;
 
+    @ManyToOne()
+    @JoinColumn(name = "userId")
+    private User assignedEngineer;
 
     public String getIssueInfo() {
         return issueInfo;
@@ -108,6 +116,16 @@ public class Ticket {
     public Feedback getFeedback()
     {
         return this.feedback;
+    }
+
+    public void setAssignedEngineer(User assignedEngineer)
+    {
+        this.assignedEngineer = assignedEngineer;
+    }
+
+    public User getAssignedEngineer()
+    {
+        return this.assignedEngineer;
     }
     
 

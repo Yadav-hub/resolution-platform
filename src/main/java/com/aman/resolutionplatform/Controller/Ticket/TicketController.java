@@ -1,7 +1,7 @@
 package com.aman.resolutionplatform.Controller.Ticket;
 import com.aman.resolutionplatform.DTO.Ticket.TicketResponseDTO;
 import org.springframework.web.bind.annotation.RestController;
-import com.aman.resolutionplatform.DTO.Ticket.TicketDTO;
+import com.aman.resolutionplatform.DTO.Ticket.TicketRequestDTO;
 import com.aman.resolutionplatform.DTO.Ticket.UpdateTicketStatusDTO;
 import com.aman.resolutionplatform.Enum.Ticket.Department;
 import com.aman.resolutionplatform.Enum.Ticket.TicketStatus;
@@ -50,7 +50,7 @@ public class TicketController {
     
 
     @PostMapping("/ticket")
-    public ResponseEntity<TicketResponseDTO> createTicket(@RequestBody @Valid TicketDTO ticketDTO) {
+    public ResponseEntity<TicketResponseDTO> createTicket(@RequestBody @Valid TicketRequestDTO ticketDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ticketService.createTicket(ticketDTO));
     }
     

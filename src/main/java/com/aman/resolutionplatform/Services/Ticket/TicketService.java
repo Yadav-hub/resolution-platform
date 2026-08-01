@@ -6,7 +6,7 @@ import com.aman.resolutionplatform.DTO.Ticket.TicketResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.aman.resolutionplatform.DTO.Ticket.TicketDTO;
+import com.aman.resolutionplatform.DTO.Ticket.TicketRequestDTO;
 import com.aman.resolutionplatform.Enum.Ticket.Department;
 import com.aman.resolutionplatform.Enum.Ticket.TicketStatus;
 
@@ -14,7 +14,7 @@ public interface TicketService {
 
 
 
-    TicketResponseDTO createTicket(TicketDTO ticketDTO);
+    TicketResponseDTO createTicket(TicketRequestDTO ticketDTO);
     TicketResponseDTO getTicketById(Integer ticket_id);
     Page<TicketResponseDTO> getAllTickets(Pageable pageable);
 

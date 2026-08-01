@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
-public class FeedbackDTO {
+public class FeedbackRequestDTO {
 
     @Size(min = 3, message = "Name must contain at least 3 charachters")
     private String customerName;

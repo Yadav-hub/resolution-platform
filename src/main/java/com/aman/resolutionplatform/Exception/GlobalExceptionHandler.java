@@ -1,14 +1,17 @@
 package com.aman.resolutionplatform.Exception;
 import java.time.LocalDateTime;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import com.aman.resolutionplatform.Exception.response.ErrorReponse;
+import com.aman.resolutionplatform.Exception.response.ErrorResp;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -17,9 +20,9 @@ import jakarta.validation.ConstraintViolationException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(FeedbackNotFoundException.class)
-    public ResponseEntity<ErrorReponse> handleFeedbackNotFoundException(FeedbackNotFoundException ex)
+    public ResponseEntity<ErrorResp> handleFeedbackNotFoundException(FeedbackNotFoundException ex)
     {
-        ErrorReponse error = new ErrorReponse();
+        ErrorResp error = new ErrorResp();
         error.setMessage(ex.getMessage());
         error.setTimestamp(LocalDateTime.now());
         error.setStatusCode(HttpStatus.NOT_FOUND);
@@ -28,10 +31,24 @@ public class GlobalExceptionHandler {
                 .body(error);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorReponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex)
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<ErrorResp> handleHandlerMethodValidationException(HandlerMethodValidationException ex)
     {
-        ErrorReponse error = new ErrorReponse();
+        ErrorResp error = new ErrorResp();
+        error.setMessage(ex.getMessage());
+        error.setTimestamp(LocalDateTime.now());
+        error.setStatusCode(HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.
+                status(error.getStatusCode()).
+                body(error);
+    }
+    
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResp> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex)
+    {
+        ErrorResp error = new ErrorResp();
         error.setMessage(ex.getMessage());
         error.setTimestamp(LocalDateTime.now());
         error.setStatusCode(HttpStatus.BAD_REQUEST);
@@ -42,9 +59,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(TicketNotFoundException.class)
-    public ResponseEntity<ErrorReponse> handleTicketNotFoundException(TicketNotFoundException ex)
+    public ResponseEntity<ErrorResp> handleTicketNotFoundException(TicketNotFoundException ex)
     {
-        ErrorReponse error = new ErrorReponse();
+        ErrorResp error = new ErrorResp();
         error.setMessage(ex.getMessage());
         error.setStatusCode(HttpStatus.NOT_FOUND);
         error.setTimestamp(LocalDateTime.now());
@@ -54,9 +71,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public  ResponseEntity<ErrorReponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e)
+    public  ResponseEntity<ErrorResp> handleHttpMessageNotReadableException(HttpMessageNotReadableException e)
     {
-        ErrorReponse error = new ErrorReponse();
+        ErrorResp error = new ErrorResp();
         error.setMessage(e.getMessage());
         error.setTimestamp(LocalDateTime.now());
         
@@ -65,9 +82,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public  ResponseEntity<ErrorReponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e)
+    public  ResponseEntity<ErrorResp> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e)
     {
-        ErrorReponse error = new ErrorReponse();
+        ErrorResp error = new ErrorResp();
         error.setMessage(e.getMessage());
         error.setTimestamp(LocalDateTime.now());
         
@@ -76,27 +93,77 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorReponse> handleConstraintViolationException(ConstraintViolationException ex)
+    public ResponseEntity<ErrorResp> handleConstraintViolationException(ConstraintViolationException ex)
     {
-        ErrorReponse error = new ErrorReponse();
+        ErrorResp error = new ErrorResp();
         error.setMessage(ex.getMessage());
         error.setTimestamp(LocalDateTime.now());
         error.setStatusCode(HttpStatus.BAD_REQUEST);
         return ResponseEntity.status(error.getStatusCode()).body(error);
     }
+
+    
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResp> handleDataIntegrityViolationException(DataIntegrityViolationException e)
+    {
+        ErrorResp error = new ErrorResp();
+        error.setMessage("Email already exists.");
+        error.setStatusCode(HttpStatus.CONFLICT);
+        error.setTimestamp(LocalDateTime.now());
+
+        return ResponseEntity
+            .status(error.getStatusCode())
+            .body(error);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResp> handleUserNotFoundException(UserNotFoundException e)
+    {
+        ErrorResp error = new ErrorResp();
+        error.setMessage(e.getMessage());
+        error.setStatusCode(HttpStatus.NOT_FOUND);
+        error.setTimestamp(LocalDateTime.now());
+
+        return ResponseEntity
+            .status(error.getStatusCode())
+            .body(error);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ErrorResp> handleEmailAlreadyExistsException(EmailAlreadyExistsException e)
+    {
+        ErrorResp err = new ErrorResp();
+        err.setMessage(e.getMessage());
+        err.setStatusCode(HttpStatus.CONFLICT);
+        err.setTimestamp(LocalDateTime.now());
+        
+        return ResponseEntity.status(err.getStatusCode()).body(err);
+
+    }
+
+    @ExceptionHandler(PhoneNumberAlreadyExistsException.class)
+    public ResponseEntity<ErrorResp> handlePhoneNumberAlreadyExistsException(PhoneNumberAlreadyExistsException e)
+    {
+        ErrorResp error = new ErrorResp();
+        error.setMessage(e.getMessage());
+        error.setStatusCode(HttpStatus.CONFLICT);
+        error.setTimestamp(LocalDateTime.now());
+
+        return ResponseEntity.status(error.getStatusCode()).body(error);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAnyException(Exception e)
     {
-       ErrorReponse error = new ErrorReponse();
+       ErrorResp error = new ErrorResp();
        error.setMessage(e.getMessage());
        error.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
        error.setTimestamp(LocalDateTime.now());
        return ResponseEntity
                .status(error.getStatusCode())
                .body(e.getClass().getName());
-       
-        
-
     }
+
+    
 
 }
